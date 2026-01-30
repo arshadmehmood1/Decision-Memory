@@ -7,6 +7,11 @@ export default function GlobalError({
     error: Error & { digest?: string };
     reset: () => void;
 }) {
+    // Prevent any rendering during SSR or build time (which causes the useContext error on Render)
+    if (typeof window === 'undefined') {
+        return null;
+    }
+
     return (
         <div
             style={{
@@ -24,19 +29,9 @@ export default function GlobalError({
         >
             <div style={{ textAlign: 'center' }}>
                 <h2 style={{ marginBottom: '10px' }}>Application Error</h2>
-                <p style={{ color: '#888', marginBottom: '20px' }}>
-                    A critical system error occurred.
-                </p>
+                <p style={{ color: '#888', marginBottom: '20px' }}>A critical system error occurred.</p>
                 <button
-                    onClick={() => {
-                        try {
-                            if (typeof window !== 'undefined') {
-                                window.location.reload();
-                            }
-                        } catch (e) {
-                            // Silently fail if reload doesn't work
-                        }
-                    }}
+                    onClick={() => window.location.reload()}
                     style={{
                         padding: '10px 20px',
                         backgroundColor: 'white',
@@ -44,14 +39,14 @@ export default function GlobalError({
                         border: 'none',
                         borderRadius: '4px',
                         cursor: 'pointer',
-                        fontWeight: 'bold',
+                        fontWeight: 'bold'
                     }}
                 >
-                    Reload Application
+                    Reload
                 </button>
                 {error?.digest && (
-                    <p style={{ fontSize: '10px', color: '#444', marginTop: '20px' }}>
-                        Ref: {error.digest}
+                    <p style={{ fontSize: '12px', color: '#444', marginTop: '20px' }}>
+                        Error ID: {error.digest}
                     </p>
                 )}
             </div>
