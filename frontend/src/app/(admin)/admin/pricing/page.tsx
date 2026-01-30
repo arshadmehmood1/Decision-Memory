@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { apiRequest } from '@/lib/api-client';
 import {
@@ -44,6 +45,7 @@ export default function AdminPricing() {
     const [isResetting, setIsResetting] = useState(false);
     const [prices, setPrices] = useState<PriceConfig[]>([]);
     const [loading, setLoading] = useState(true);
+    const [mounted, setMounted] = useState(false);
 
     const fetchPrices = async () => {
         try {
@@ -57,6 +59,7 @@ export default function AdminPricing() {
     };
 
     useEffect(() => {
+        setMounted(true);
         fetchPrices();
     }, []);
 
@@ -121,6 +124,8 @@ export default function AdminPricing() {
             default: return 'text-gray-400';
         }
     };
+
+    if (!mounted) return null;
 
     return (
         <div className="max-w-5xl mx-auto space-y-8">
@@ -290,4 +295,3 @@ export default function AdminPricing() {
         </div>
     );
 }
-

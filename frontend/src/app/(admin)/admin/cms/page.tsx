@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { apiRequest } from '@/lib/api-client';
 import {
@@ -25,7 +26,6 @@ import { Badge } from '@/components/ui/Badge';
 import { toast } from 'sonner';
 import { useStore } from '@/lib/store';
 
-
 export default function AdminCMS() {
     const [activeTab, setActiveTab] = useState('LANDING');
     const [showEditor, setShowEditor] = useState(false);
@@ -40,15 +40,20 @@ export default function AdminCMS() {
     const [versions, setVersions] = useState<any[]>([]);
     const { toggleFeatureFlag, fetchFeatureFlag, featureFlags } = useStore();
     const FEATURE_KEYS = ['new_pricing_page', 'ai_analytics', 'beta_dashboard'];
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
         if (activeTab === 'FEATURES') {
             FEATURE_KEYS.forEach(key => fetchFeatureFlag(key));
         } else {
             loadVersions();
         }
-    }, [activeTab]);
-
+    }, [activeTab, mounted]);
 
     const loadVersions = async () => {
         try {
@@ -105,6 +110,8 @@ export default function AdminCMS() {
             toast.error("Rollback failed. Timeline unchanged.");
         }
     };
+
+    if (!mounted) return null;
 
     return (
         <div className="max-w-6xl mx-auto space-y-8">
@@ -523,4 +530,3 @@ export default function AdminCMS() {
         </div>
     );
 }
-

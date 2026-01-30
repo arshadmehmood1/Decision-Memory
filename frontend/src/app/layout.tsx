@@ -28,11 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <AuthSync />
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <AuthSync />
           <QueryProvider>
             {children}
             <Toaster position="top-right" richColors closeButton />

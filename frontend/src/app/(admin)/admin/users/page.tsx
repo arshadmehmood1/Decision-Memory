@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { apiRequest } from '@/lib/api-client';
 import {
@@ -48,6 +49,7 @@ export default function AdminUsers() {
     const [search, setSearch] = useState('');
     const [pagination, setPagination] = useState<Pagination>({ page: 1, limit: 20, total: 0, pages: 0 });
     const [editingRole, setEditingRole] = useState<string | null>(null);
+    const [mounted, setMounted] = useState(false);
 
     const fetchUsers = async (page = 1, searchQuery = '') => {
         setLoading(true);
@@ -67,6 +69,7 @@ export default function AdminUsers() {
     };
 
     useEffect(() => {
+        setMounted(true);
         fetchUsers();
     }, []);
 
@@ -115,6 +118,8 @@ export default function AdminUsers() {
                 return <Badge className="bg-gray-500/10 text-gray-400 border-gray-500/20">Free</Badge>;
         }
     };
+
+    if (!mounted) return null;
 
     return (
         <div className="max-w-6xl mx-auto space-y-8">
@@ -206,8 +211,8 @@ export default function AdminUsers() {
                                                             key={role}
                                                             onClick={() => handleRoleChange(user.id, role)}
                                                             className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${user.role === role
-                                                                    ? 'bg-primary text-white'
-                                                                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                                                                ? 'bg-primary text-white'
+                                                                : 'bg-white/5 text-gray-400 hover:bg-white/10'
                                                                 }`}
                                                         >
                                                             {role}

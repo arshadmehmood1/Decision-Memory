@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { apiRequest } from '@/lib/api-client';
 import {
     Megaphone,
@@ -24,6 +25,11 @@ export default function AdminBroadcast() {
     const [type, setType] = useState('INFO');
     const [isSending, setIsSending] = useState(false);
     const [isPreviewMode, setIsPreviewMode] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleBroadcast = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,6 +56,8 @@ export default function AdminBroadcast() {
             setIsSending(false);
         }
     };
+
+    if (!mounted) return null;
 
     const types = [
         { id: 'INFO', icon: Info, color: 'text-blue-400', label: 'Neutral Info' },
