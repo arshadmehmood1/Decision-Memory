@@ -1,5 +1,7 @@
 import { InfoPage } from '@/components/layout/InfoPage';
 
+export const dynamic = 'force-dynamic';
+
 export default function ApiDocsPage() {
     return (
         <InfoPage

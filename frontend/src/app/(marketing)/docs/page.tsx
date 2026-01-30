@@ -1,6 +1,8 @@
 import { InfoPage } from '@/components/layout/InfoPage';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default function DocsPage() {
     return (
         <InfoPage
