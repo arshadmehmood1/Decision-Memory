@@ -21,6 +21,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 interface AdminStats {
     userCount: number;
@@ -315,6 +316,4 @@ export default function AdminDashboard() {
     );
 }
 
-function cn(...classes: any[]) {
-    return classes.filter(Boolean).join(' ');
 }
