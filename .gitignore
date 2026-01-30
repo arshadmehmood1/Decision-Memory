@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*_output.txt
+failure_trace*.txt
+build_*.txt
+test_results.json
+
+# Databases
+*.db
+*.db-journal
+
+# Compiled
+dist/
+.next/
+out/
+build/
+*.tsbuildinfo

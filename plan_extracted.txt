@@ -1,0 +1,1755 @@
+Decision Memory MVP - Public Launch Plan
+Complete Feature Specification & Phased Rollout Strategy
+
+📋 TABLE OF CONTENTS
+MVP Core Features (Launch Day)
+Week 2-4 Updates (Critical Improvements)
+Month 2-3 Updates (Habit Formation)
+Month 4-6 Updates (AI & Retention)
+Month 7-12 Updates (Scale & Growth)
+Technical Specifications
+User Onboarding Flow
+Feature Prioritization Matrix
+Success Metrics Per Phase
+
+🚀 PHASE 1: MVP CORE (Launch Day - Week 1)
+What Users Get on Day 1
+1. AUTHENTICATION & WORKSPACE SETUP
+Features:
+Sign up with email + password
+Sign up with Google OAuth
+Create workspace (auto-named: "[Your Name]'s Workspace")
+Workspace switching (if user creates multiple)
+Basic profile settings (name, email, timezone)
+User Limits (Free Tier):
+1 workspace
+1 user (solo only)
+Up to 25 decisions max
+30-day data retention for deleted items
+
+2. DECISION CREATION (CORE FUNCTIONALITY)
+Quick Create Flow (30 seconds):
+Step 1: Decision Title
+- Input: Text field (120 char max)
+- Placeholder: "e.g., Switch from Mailchimp to ConvertKit"
+
+Step 2: The Decision (Required)
+- Input: Text area (500 char max)
+- Placeholder: "What did you choose? Be specific."
+- Example shown: "We're switching to ConvertKit because..."
+
+Step 3: Category (Required)
+- Dropdown: Product, Marketing, Sales, Hiring, Tech, Operations, Strategic, Other
+
+Step 4: Quick Save Button
+- Saves with status: "Active"
+- Auto-fills made_by (current user), made_on (current date)
+Standard Create Flow (3-5 minutes):
+Includes Quick Create fields PLUS:
+Context (Required)
+- Rich text editor (2000 char max)
+- Prompt: "Why are you making this decision right now?"
+- Helper text: "Example: Our email open rates dropped 20% last month..."
+
+Alternatives Considered (Required - Min 1)
+- Add/remove alternative fields
+- Each alternative:
+  • Name: Text input
+  • Why rejected: Text area (200 char)
+- Placeholder: "e.g., Mailchimp - Too expensive for our scale"
+
+Key Assumptions (Required - Min 2)
+- Add/remove assumption fields
+- Text input per assumption
+- Placeholder: "e.g., We'll send 50k emails/month within 6 months"
+
+Success Criteria (Required - Min 1)
+- Add/remove criteria fields
+- Text input per criterion
+- Placeholder: "e.g., Open rate improves by 10%"
+
+Optional Fields (Expandable Section):
+- Estimated Impact: Low | Medium | High | Critical
+- Reversibility: Easy | Moderate | Hard | Irreversible
+- Confidence Level: Slider 0-100%
+- Timeline to Validate: Date picker
+- Budget Impact: Number input ($)
+- Tags: Comma-separated text input
+Decision Creation Rules:
+Must fill ALL required fields to save
+Can save as "Draft" with only title
+Draft decisions shown separately in dashboard
+Max 5 alternatives, 10 assumptions, 5 success criteria
+
+3. DECISION DASHBOARD (HOME)
+Layout:
+Top Bar:
+- Search box (searches title + context)
+- Filter dropdowns: Status | Category | Date Range
+- Sort by: Newest | Oldest | Recently Updated
+- "New Decision" button (primary CTA)
+
+Decision Cards (List View):
+Each card shows:
+- Title (linked to detail page)
+- Category badge
+- Status badge (color-coded)
+- Made on date
+- Made by (user name)
+- Tags (if any)
+- Quick actions: Edit | View | Delete
+
+Empty State (0 decisions):
+- Illustration
+- "You haven't logged any decisions yet"
+- "Log your first decision" CTA button
+- Example decisions shown (clickable, creates draft)
+Filters Available:
+Status: All | Active | Succeeded | Failed | Reversed | Draft
+Category: All categories + selected category
+Date: Last 7 days | Last 30 days | Last 90 days | All time | Custom range
+Pagination:
+Show 20 decisions per page
+Load more button (no infinite scroll in MVP)
+
+4. DECISION DETAIL PAGE (VIEW/EDIT)
+Layout:
+Header:
+- Decision title (editable inline)
+- Status dropdown (Active | Succeeded | Failed | Reversed)
+- Edit mode toggle
+- Delete button (archive)
+- Created date + by whom
+- Last updated date + by whom
+
+Main Content (Read Mode):
+- Category badge
+- The Decision (formatted text)
+- Context (formatted text)
+- Alternatives Considered (numbered list)
+- Key Assumptions (numbered list)
+- Success Criteria (numbered list)
+- Optional fields (shown if filled):
+  • Estimated Impact
+  • Reversibility
+  • Confidence Level (progress bar)
+  • Timeline to Validate
+  • Budget Impact
+  • Tags
+
+Edit Mode:
+- All fields become editable
+- Save/Cancel buttons
+- Version saved automatically on save
+
+Bottom Actions:
+- "Update Outcome" button (if status = Active)
+- "View Similar Decisions" (AI-powered, shows 0-3 matches)
+
+5. DECISION OUTCOME UPDATE (REVIEW FLOW)
+Triggered when:
+User clicks "Update Outcome" on decision detail page
+User changes status from Active to Succeeded/Failed/Reversed
+Form (if marking as Succeeded):
+✓ What Happened? (Required)
+- Text area (1000 char max)
+- Prompt: "Did this decision achieve what you expected?"
+
+✓ Validate Assumptions
+- Shows all original assumptions
+- For each: Mark as True | False | Partially True | Unknown
+- Optional notes per assumption
+
+✓ Actual Impact (Optional)
+- Dropdown: Lower than expected | As expected | Higher than expected
+
+✓ Would you make this decision again? (Optional)
+- Yes | No | Unsure
+
+Save Button
+Form (if marking as Failed or Reversed):
+✓ What Went Wrong? (Required)
+- Text area (1000 char max)
+- Prompt: "What actually happened vs. what you expected?"
+
+✓ Root Cause (Required)
+- Dropdown: Bad Data | Wrong Assumptions | Changed Context | 
+            Rushed Decision | Ignored Warnings | External Shock | Other
+
+✓ Could We Have Known? (Required)
+- Yes - We Had Signals | Maybe - Unclear | No - Unforeseeable
+
+✓ What We Learned (Required)
+- Text area (1000 char max)
+- Prompt: "What would you do differently next time?"
+
+✓ Cost of Failure (Optional)
+- Minor (<$1k) | Moderate ($1k-$10k) | Major ($10k-$50k) | Severe (>$50k)
+
+✓ Validate Assumptions
+- Same as Succeeded flow
+
+Save Button
+After Saving:
+Decision status updates to Succeeded/Failed/Reversed
+Timestamp recorded
+Success message: "Outcome recorded. You're building decision intelligence!"
+Redirect to dashboard
+
+6. SEARCH & FILTERING
+Search Functionality:
+Searches: Decision title, context text, alternatives, assumptions
+Real-time search (updates results as you type)
+Minimum 3 characters to trigger search
+Shows match count: "Found 12 decisions"
+Highlights matched terms in results
+Filter Combinations:
+Can combine: Status + Category + Date Range
+Applied filters shown as removable tags
+"Clear all filters" button
+
+7. BASIC AI FEATURES (MVP)
+AI Auto-Tagging (Passive):
+Triggers when user creates/edits decision
+Analyzes: Title + Context + The Decision text
+Generates 3-5 relevant tags
+User can accept (auto-added) or ignore
+User can manually add/remove tags anytime
+Example Tags Generated:
+"pricing", "product-strategy", "vendor-switch", "team-growth", "technical-debt"
+Similar Decision Detection:
+Shown on decision detail page
+Section: "Similar Decisions You've Made"
+Shows 0-3 most similar past decisions (if any exist)
+Similarity based on: • Title/context text embeddings (OpenAI) • Category match • Tag overlap
+Each match shows: Title, date, outcome (if updated)
+Click to open that decision in new tab
+AI Limitations in MVP:
+No pattern insights (requires 20+ decisions)
+No predictive risk scoring
+No assumption quality analysis
+No weekly digest emails (manual only)
+
+8. USER SETTINGS
+Profile:
+Name (editable)
+Email (read-only, can request change)
+Timezone (for date displays)
+Profile picture (upload, 2MB max)
+Workspace Settings:
+Workspace name (editable by creator only)
+Danger zone: Delete workspace (requires confirmation)
+Notifications:
+Email notifications: ON | OFF (global toggle)
+Weekly summary email: ON | OFF (coming soon, disabled in MVP)
+Data & Privacy:
+Export all decisions (coming soon, disabled in MVP)
+Delete account (requires email confirmation)
+
+9. LIMITS & UPGRADE PROMPTS (FREE TIER)
+Hard Limits:
+25 decisions maximum
+1 workspace
+1 user (no team invites)
+Upgrade Prompts (Modal):
+When hitting 20 decisions:
+🎉 You've logged 20 decisions!
+
+You're building serious decision intelligence.
+
+You have 5 decisions left on the free plan.
+
+Upgrade to Pro for:
+✓ Unlimited decisions
+✓ Advanced AI insights
+✓ Automated reminders
+✓ Export your data
+
+[Upgrade to Pro - $15/month]  [Maybe Later]
+When hitting 25 decisions:
+⚠️ You've reached your decision limit
+
+You can't create new decisions on the free plan.
+
+Upgrade to Pro to continue logging decisions and unlock:
+✓ Unlimited decisions
+✓ AI pattern detection
+✓ Weekly insights digest
+✓ Priority support
+
+[Upgrade to Pro - $15/month]  [View Pricing]
+Team Invite Attempt (Free Tier):
+👥 Team collaboration requires an upgrade
+
+Invite team members with the Team plan.
+
+Team Plan ($49/month) includes:
+✓ Up to 5 team members
+✓ Shared decision history
+✓ Role-based permissions
+✓ Team insights
+
+[Upgrade to Team Plan]  [Learn More]
+
+10. HELP & SUPPORT
+In-App Help:
+"?" icon in top navigation
+Opens help sidebar with: • Getting Started Guide (5 steps) • Video: "How to log your first decision" (2 min) • FAQ (10 common questions) • Contact support link
+Email Support:
+support@decisionmemory.com
+Response time: 48 hours (mentioned in help docs)
+Onboarding Checklist (First Login):
+☐ Create your first decision
+☐ Add at least 2 assumptions
+☐ Log 3 decisions this week
+☐ Update outcome on 1 decision
+
+Progress: 0/4 completed
+[Dismiss checklist]
+
+🎨 MVP UI/UX STANDARDS
+Design System (Minimal)
+Colors:
+Primary: Blue (#3B82F6) - CTAs, links
+Success: Green (#10B981) - Succeeded status
+Warning: Yellow (#F59E0B) - Active status
+Danger: Red (#EF4444) - Failed/Reversed status
+Neutral: Gray scale (#F3F4F6 to #1F2937)
+Typography:
+Font: Inter (Google Fonts)
+Headings: 24px, 20px, 18px (semibold)
+Body: 16px (regular), 14px (small text)
+Components:
+Buttons: Primary (filled blue), Secondary (outline), Danger (filled red)
+Inputs: Border radius 6px, focus ring
+Cards: White background, subtle shadow, 8px radius
+Badges: Small, colored background, 4px radius
+Responsive:
+Desktop-first (optimize for 1440px)
+Mobile-friendly but not mobile-optimized (acceptable UX on 375px)
+Tablet breakpoint: 768px
+
+📊 MVP SUCCESS METRICS (Week 1)
+Acquisition:
+100 signups in Week 1
+Source tracking: Which channel drove signups?
+Activation (Primary Metric):
+40% of signups log at least 3 decisions in first 7 days
+Average time to first decision: <10 minutes from signup
+Engagement:
+30% of users return on Day 3
+20% of users return on Day 7
+Average decisions logged per active user: 5+
+Quality:
+50% of decisions have all required fields filled
+30% of decisions have assumptions + alternatives (quality logging)
+Upgrade Signal:
+5% of users hit 20 decision limit in Week 1
+2% of users attempt team invite (shows interest in paid features)
+
+⚡ PHASE 2: WEEK 2-4 UPDATES (Critical Improvements)
+Launch Goals: Fix Friction, Improve Onboarding, Ship Quick Wins
+UPDATE 2.1 (Week 2) - Onboarding Improvements
+New Feature: Interactive Demo Decision
+When new user signs up:
+Modal Overlay:
+"Welcome to Decision Memory! 👋
+
+Let's start with a demo decision so you can see how it works.
+
+[Show me the demo]  [Skip, I'll explore]
+If user clicks "Show me the demo":
+Pre-filled example decision appears (read-only)
+Example: "Switch from Heroku to Railway"
+Shows all fields filled (context, alternatives, assumptions, success criteria)
+Annotations explain each field: "This is the context - why you're making this decision"
+User can click "Create my first decision" from demo
+New Feature: Decision Templates
+Add "Use Template" option when creating decision:
+Templates available:
+1. Tool/Vendor Switch
+2. Hiring Decision
+3. Pricing Change
+4. Product Feature Prioritization
+5. Marketing Channel Test
+6. Strategic Pivot
+
+User selects template → Form pre-fills with:
+- Field placeholders specific to that decision type
+- Example alternatives
+- Common assumption templates
+Example: "Hiring Decision" template pre-fills:
+Context: "What role are you hiring for? What gap does it fill?"
+Alternatives: "Hire full-time | Hire contractor | Don't hire, redistribute work"
+Assumptions: "This person will stay 2+ years | They'll ramp up in X months"
+Improvement: Simplified First Decision Flow
+For first decision only:
+Hide optional fields by default
+Only show: Title, Decision, Category
+After saving first decision, show: "Want to add more detail? (alternatives, assumptions)"
+Progressive disclosure: User can expand to full form if they want
+New Feature: Progress Indicators
+Add progress bar to decision creation form:
+Step 1 of 3: Basic Info
+[========>        ] 33%
+Shows user how far through the form they are.
+
+UPDATE 2.2 (Week 3) - Email Notifications
+New Feature: Welcome Email Series
+Email 1: Immediately after signup
+Subject: "Welcome to Decision Memory - Here's how to get started"
+Content:
+- Thank you for joining
+- Link to demo decision
+- "Log your first decision" CTA
+- Link to 2-minute video tutorial
+
+Email 2: Day 3 (if <3 decisions logged)
+Subject: "Quick tip: Log a past decision you regret"
+Content:
+- Suggestion: "Start with a decision you regret - switching tools, bad hire, pricing mistake"
+- Example: "I switched from X to Y and immediately regretted it"
+- "Logging past regrets helps you see patterns"
+
+Email 3: Day 7 (if 3+ decisions logged)
+Subject: "You're building decision intelligence 🧠"
+Content:
+- Congratulations on logging X decisions
+- Tip: "Now go back and update outcomes on past decisions"
+- Show preview of AI insights unlocking at 20 decisions
+New Feature: Outcome Reminder Emails
+Trigger: Decision has timeline_to_validate date, and that date arrives
+Subject: "Time to review your decision: [Decision Title]"
+Content:
+- "You made this decision X days ago"
+- "You said you'd know if it worked by [date]"
+- Link to decision detail page
+- One-click "Update Outcome" CTA
+
+UPDATE 2.3 (Week 4) - Quick Wins Based on User Feedback
+New Feature: Duplicate Decision
+Add button on decision detail page:
+"Duplicate this decision"
+Creates new decision with same structure
+Useful for similar decisions (e.g., multiple vendor evaluations)
+New Feature: Decision Status Quick Edit
+On dashboard cards, add status dropdown:
+User can change status without opening detail page
+Faster workflow for power users
+Improvement: Better Search
+Add search filters:
+"Search in: Title | Context | All"
+Search results show matched text snippet
+Improvement: Keyboard Shortcuts
+Add shortcuts (shown in help menu):
+Cmd/Ctrl + K: Open search
+Cmd/Ctrl + N: New decision
+Cmd/Ctrl + /: Open help
+Escape: Close modal/sidebar
+New Feature: Bulk Actions (Dashboard)
+Add checkbox selection on dashboard:
+Select multiple decisions
+Bulk actions: Delete | Archive | Change Status | Add Tag
+
+🧠 PHASE 3: MONTH 2-3 UPDATES (Habit Formation)
+Launch Goals: Make Logging a Habit, Increase Retention
+UPDATE 3.1 (Month 2) - Reminders & Nudges
+New Feature: Weekly Check-In Email
+Sent every Monday at 9am user's timezone
+
+Subject: "Your decision summary for last week"
+
+Content:
+📊 Last week you:
+- Logged 3 new decisions
+- Updated 1 outcome
+- Have 2 active decisions awaiting review
+
+📝 Decisions awaiting outcome update:
+1. [Decision Title] - Made 45 days ago
+2. [Decision Title] - Made 60 days ago
+
+🎯 This week's goal:
+- Update at least 1 outcome
+- Log 2 new decisions
+
+[View Dashboard]
+New Feature: In-App Reminders
+Dashboard banner system:
+If no decisions logged this week:
+"You haven't logged any decisions this week. Made any tough calls?"
+
+If 3+ active decisions over 90 days old:
+"You have 3 decisions from 90+ days ago. Time to review outcomes?"
+
+If user hit 15 decisions:
+"Only 10 decisions left on free plan. Upgrade to continue building decision intelligence."
+New Feature: Smart Prompts
+Context-aware suggestions:
+If user logs 2 pricing decisions:
+"We noticed you're making pricing decisions. Want to see a pricing decision template?"
+
+If user marks 2nd decision as "Reversed":
+"This is your 2nd reversed decision. Want to analyze patterns in your decision-making?"
+
+UPDATE 3.2 (Month 2) - Decision Linking & Context
+New Feature: Related Decisions (Manual Linking)
+On decision detail page:
+"Link Related Decisions" button
+Search existing decisions
+Select decisions to link
+Shows as "Related Decisions" section
+Use case: "This decision reversed our earlier decision to use X"
+New Feature: Decision Timeline View
+New dashboard view option:
+Switch from List View to Timeline View
+Shows decisions on chronological timeline
+Groups by month
+Visual indicator for outcomes (green = success, red = failure)
+
+UPDATE 3.3 (Month 3) - Export & Data Ownership
+New Feature: Export Decisions (Pro/Team Only)
+Settings page:
+"Export All Decisions" button
+Formats available: JSON | CSV | PDF Report
+PDF Report includes: • All decisions with full details • Outcomes and reflections • Stats summary (success rate, top categories) • Generated as downloadable PDF
+New Feature: Individual Decision PDF
+Decision detail page:
+"Export as PDF" button
+Generates clean PDF with: • Decision title, date, status • All fields • Outcome reflection (if exists) • Use case: Share decision with advisor/investor
+
+🤖 PHASE 4: MONTH 4-6 UPDATES (AI & Retention Features)
+Launch Goals: Unlock AI Value, Reduce Churn
+UPDATE 4.1 (Month 4) - AI Pattern Insights (MAJOR FEATURE)
+Prerequisite: User must have 20+ decisions logged
+New Feature: Insights Dashboard
+New top-level navigation item: "Insights"
+Insights Page Layout:
+
+Header:
+"Your Decision Patterns"
+"We've analyzed 47 decisions to find patterns in your decision-making."
+
+Insight Cards (Generated Weekly):
+
+1. Success Rate Card
+"Your decision success rate: 65%"
+- Breakdown by category (Product: 80%, Hiring: 40%, etc.)
+- Chart showing trend over time
+
+2. Assumption Accuracy Card
+"Your assumption accuracy: 52%"
+- "You tend to be overconfident in timeline estimates"
+- Show examples of assumptions that were wrong
+
+3. Recurring Failures Card
+"You've reversed 3 tool decisions in 6 months"
+- Common reason: "Poor customer support"
+- Suggestion: "Add 'Support Quality' as a top-3 criterion in future tool decisions"
+
+4. Decision Speed Card
+"Average time from decision to outcome: 42 days"
+- Compare to your stated timeline_to_validate
+- "You tend to underestimate implementation time by 40%"
+
+5. Team Dynamics (Team Plan Only)
+"Decisions made with Sarah have 80% success rate"
+"Decisions made solo have 50% success rate"
+- Suggestion: "Consider getting input from Sarah on high-impact decisions"
+How AI Generates Insights:
+Backend Job (Runs Weekly):
+1. Query all decisions for workspace (min 20)
+2. Calculate statistics:
+   - Success rate (% of decisions marked Succeeded)
+   - Failure rate by category
+   - Assumption validation rates
+   - Reversal patterns (same category, similar reasons)
+3. Use GPT-4o to generate natural language insights
+4. Store insights in DB (insights table)
+5. Display on Insights page
+
+Prompt Template for GPT-4o:
+"Analyze these decision data points: [JSON of decisions]
+Generate 3-5 actionable insights about patterns, blindspots, or trends.
+Format as: Pattern + Evidence + Suggestion."
+Email Notification:
+When first insights generated:
+Subject: "🧠 Your first decision insights are ready"
+Content:
+- "We've analyzed your 24 decisions"
+- Teaser: "You're overconfident in timeline estimates by 35%"
+- CTA: "View full insights"
+
+UPDATE 4.2 (Month 5) - AI Risk Scoring
+New Feature: Decision Risk Score (Before Creation)
+When creating decision:
+If user fills Impact = High, Reversibility = Hard, Confidence = Low
+AI calculates risk score: 0-100
+Shows warning:
+⚠️ This is a HIGH RISK decision (Risk Score: 78)
+
+Reasons:
+- High impact + hard to reverse
+- Low confidence level
+- No similar past decisions for reference
+
+Suggestions before proceeding:
+✓ Add more alternatives (you only listed 1)
+✓ Validate at least 3 key assumptions
+✓ Set a shorter timeline to validate (you said 6 months)
+
+[Proceed anyway]  [Improve this decision]
+New Feature: AI Assumption Checker
+When user enters assumption:
+AI analyzes text
+Flags vague assumptions:
+Example Input: "This will work"
+
+AI Response:
+"This assumption is vague. Be more specific:
+- What metric defines 'work'?
+- What's the threshold for success?
+
+Suggested rewrite: 'This will increase signups by 20% in 60 days'"
+
+UPDATE 4.3 (Month 6) - Retention Features
+New Feature: Streaks & Gamification
+Dashboard shows:
+🔥 7-day streak: You've logged decisions for 7 days in a row!
+
+Milestones:
+☐ Log 10 decisions (8/10)
+☐ Update 5 outcomes (3/5)
+☑ Use for 30 days (Done!)
+☐ Invite a team member
+
+Next milestone: Log 10 decisions → Unlock "Decision Master" badge
+New Feature: Monthly Review
+Every 1st of month, email:
+Subject: "Your November decision review is ready"
+
+Content:
+📊 Last month you:
+- Logged 12 decisions
+- Updated 4 outcomes
+- Success rate: 75%
+
+🏆 Top category: Product (6 decisions)
+🚨 Needs review: 3 decisions from October still have no outcome
+
+📈 Insight: Your confidence level is improving (avg 68% → 74%)
+
+[View full report]
+New Feature: Decision Journal
+New view: "Journal Mode"
+Shows decisions in diary format
+Sorted chronologically
+Read-only view
+Good for reflection: "What was I thinking 6 months ago?"
+
+📈 PHASE 5: MONTH 7-12 UPDATES (Scale & Growth Features)
+Launch Goals: Team Collaboration, Integrations, Enterprise Readiness
+UPDATE 5.1 (Month 7) - Team Features (MAJOR)
+New Feature: Team Roles & Permissions
+Workspace settings → Team tab:
+Roles:
+1. Admin (workspace creator)
+   - Full access
+   - Can delete workspace
+   - Can manage billing
+   - Can add/remove members
+
+2. Member
+   - Can create decisions
+   - Can view all team decisions (unless marked private)
+   - Can edit own decisions
+   - Cannot delete workspace or manage billing
+
+3. Viewer (read-only)
+   - Can view all decisions
+   - Cannot create or edit
+   - Good for: advisors, investors
+New Feature: Per-Decision Privacy
+Decision creation form adds:
+Visibility:
+○ Team-wide (everyone can see)
+○ Private (only me + admins)
+○ Shared with specific people [Select...]
+Use case: Founder wants to log "Should I fire my co-founder?" without team seeing.
+New Feature: Team Activity Feed
+New page: "Activity"
+Shows:
+Sarah updated outcome on "Hire Senior Engineer"
+2 hours ago
+
+John created decision "Switch to Vercel"
+5 hours ago
+
+You reversed decision "Use Paddle for payments"
+Yesterday
+
+[Load more]
+New Feature: @Mentions in Decisions
+In any text field:
+Type @ to mention team member
+They get email notification
+Use case: "This decision affects @Sarah - please review"
+
+UPDATE 5.2 (Month 8) - Slack Integration
+New Feature: Slack Bot
+User can connect Slack workspace:
+Settings → Integrations → Connect Slack
+
+Once connected:
+
+1. Log decisions from Slack:
+/decision We're switching to Stripe
+→ Opens modal in Slack with decision form
+→ Saves to Decision Memory
+
+2. Get notifications in Slack:
+- When decision needs outcome update
+- When mentioned in decision
+- Weekly summary of team decisions
+
+3. Search decisions from Slack:
+/decision search pricing
+→ Shows matching decisions in thread
+New Feature: Decision Approval Workflow (Optional)
+Team Plan feature:
+Workspace settings → Enable "Decision Approval"
+
+When enabled:
+- Members create decisions with status "Proposed"
+- Admins must approve before status changes to "Active"
+- Use case: Formal decision governance
+
+UPDATE 5.3 (Month 9) - Integrations
+New Feature: Linear Integration
+Connect Linear workspace:
+When Linear issue marked "Needs Decision", creates draft decision in Decision Memory
+When decision made, updates Linear issue with decision link
+New Feature: Google Docs Integration
+Browser extension (Chrome):
+Right-click in Google Doc
+"Log this as decision" → Extracts text, pre-fills decision form
+New Feature: Notion Integration
+Export decision to Notion database
+One-click: "Add to Notion" button on decision detail page
+New Feature: Zapier Integration
+Triggers:
+New decision created
+Decision outcome updated
+Decision status changed
+Actions:
+Create decision from external data
+Use case: "When Stripe subscription cancelled, create decision review"
+
+UPDATE 5.4 (Month 10) - Advanced Analytics
+New Feature: Analytics Dashboard (Team Plan)
+New page: "Analytics"
+Charts & Metrics:
+
+1. Decision Volume Over Time
+- Line chart showing decisions logged per week/month
+
+2. Outcome Distribution
+- Pie chart: Succeeded | Failed | Reversed | Active
+
+3. Category Breakdown
+- Bar chart: Decisions by category
+- Click to drill down
+
+4. Team Performance
+- Table showing per-user stats:
+  • Decisions logged
+  • Success rate
+  • Avg confidence level
+  • Assumption accuracy
+
+5. Time to Decision
+- How long decisions stay "Active" before outcome updated
+- Identifies stale decisions
+
+6. Cost of Failures
+- If users log budget_impact, sum total "cost" of failed decisions
+
+UPDATE 5.5 (Month 11) - Mobile App (Optional)
+iOS/Android App:
+Core features:
+View decisions
+Log quick decision (voice-to-text)
+Update outcome
+Get push notifications
+MVP mobile = read-heavy, write-light (Most decision logging happens at desk, but reviews can happen on mobile)
+
+UPDATE 5.6 (Month 12) - Enterprise Features
+New Feature: SSO (SAML)
+Enterprise Plan only:
+Integrate with Okta, Azure AD, Google Workspace
+Single sign-on for large teams
+New Feature: Custom Branding
+Enterprise Plan:
+Upload logo
+Custom domain (decisions.yourcompany.com)
+White-label UI
+New Feature: Advanced Permissions
+Custom roles beyond Admin/Member/Viewer
+Permission sets: "Can create decisions in Product category only"
+New Feature: Audit Logs
+Compliance requirement:
+Every action logged (who did what, when)
+Exportable for compliance audits
+New Feature: API Access
+Enterprise Plan:
+REST API for custom integrations
+Webhooks for real-time events
+Use case: Integrate with internal tools
+
+🛠️ TECHNICAL SPECIFICATIONS
+Tech Stack (Detailed)
+Frontend
+Framework: Next.js 14 (App Router)
+Language: TypeScript
+UI Library: Tailwind CSS + Radix UI
+State Management:
+  - React Query (server state)
+  - Zustand (client state)
+Form Management: React Hook Form + Zod (validation)
+Rich Text Editor: Tiptap (for context, decision fields)
+Date Picker: React Day Picker
+Charts (Phase 4+): Recharts
+Deployment: Vercel
+
+Folder Structure:
+/app
+  /(auth)
+    /login
+    /signup
+  /(dashboard)
+    /dashboard
+    /decision/[id]
+    /decision/new
+    /insights (Phase 4)
+    /analytics (Phase 5)
+    /settings
+  /api
+    /decisions
+    /insights
+    /auth
+/components
+  /ui (Radix primitives)
+  /decisions
+    /DecisionCard.tsx
+    /DecisionForm.tsx
+    /AssumptionList.tsx
+  /insights
+    /InsightCard.tsx
+/lib
+  /api-client.ts
+  /utils.ts
+  /validations.ts (Zod schemas)
+/hooks
+  /useDecisions.ts
+  /useInsights.ts
+
+Backend
+Framework: Next.js API Routes (Node.js)
+Language: TypeScript
+Auth: Clerk
+Database: PostgreSQL (Supabase or Railway)
+ORM: Prisma
+File Storage: S3 (for profile pictures, exports)
+Email: Resend or SendGrid
+Background Jobs: Inngest or Vercel Cron
+Rate Limiting: Upstash Redis
+
+API Routes:
+POST   /api/decisions              Create decision
+GET    /api/decisions              List decisions (paginated, filtered)
+GET    /api/decisions/:id          Get decision
+PATCH  /api/decisions/:id          Update decision
+DELETE /api/decisions/:id          Archive decision
+POST   /api/decisions/:id/outcome  Update outcome
+GET    /api/decisions/:id/similar  Get similar decisions
+POST   /api/workspaces             Create workspace
+GET    /api/workspaces/:id         Get workspace
+PATCH  /api/workspaces/:id         Update workspace
+POST   /api/workspaces/:id/invite  Invite member
+GET    /api/insights               Get insights (Phase 4)
+POST   /api/ai/tag                 AI tagging endpoint
+POST   /api/ai/similar             AI similarity search
+
+Database Schema (Prisma)
+model User {
+  id            String      @id @default(uuid())
+  clerkId       String      @unique // Clerk user ID
+  email         String      @unique
+  name          String?
+  profilePicture String?
+  workspaceId   String
+  workspace     Workspace   @relation(fields: [workspaceId], references: [id])
+  role          Role        @default(MEMBER)
+  decisions     Decision[]  @relation("DecisionCreator")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+model Workspace {
+  id        String     @id @default(uuid())
+  name      String
+  createdBy String
+  planTier  PlanTier   @default(FREE)
+  users     User[]
+  decisions Decision[]
+  insights  Insight[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum PlanTier {
+  FREE
+  PRO
+  TEAM
+  ENTERPRISE
+}
+
+model Decision {
+  id                    String           @id @default(uuid())
+  workspaceId           String
+  workspace             Workspace        @relation(fields: [workspaceId], references: [id])
+  title                 String
+  category              Category
+  madeBy                String
+  user                  User             @relation("DecisionCreator", fields: [madeBy], references: [id])
+  madeOn                DateTime
+  status                Status           @default(ACTIVE)
+  
+  // Core content
+  context               String           @db.Text
+  theDecision           String           @db.Text
+  alternativesConsidered Json            // [{name: string, whyRejected: string}]
+  keyAssumptions        Assumption[]
+  successCriteria       String[]
+  
+  // Optional metadata
+  estimatedImpact       Impact?
+  reversibility         Reversibility?
+  confidenceLevel       Int?             // 0-100
+  timelineToValidate    DateTime?
+  budgetImpact          Decimal?
+  stakeholders          String[]         // User IDs
+  relatedDecisions      String[]         // Decision IDs
+  tags                  String[]
+  aiRiskScore           Int?
+  
+  // Outcome data
+  outcome               Outcome?
+  review                Review?
+  
+  // Versioning
+  versionNumber         Int              @default(1)
+  versions              DecisionVersion[]
+  
+  // AI data
+  embedding             String?          @db.Text // Vector embedding for similarity
+  
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  
+  @@index([workspaceId, status])
+  @@index([workspaceId, category])
+  @@index([workspaceId, madeOn])
+}
+
+enum Category {
+  PRODUCT
+  MARKETING
+  SALES
+  HIRING
+  TECH
+  OPERATIONS
+  STRATEGIC
+  OTHER
+}
+
+enum Status {
+  DRAFT
+  PROPOSED
+  ACTIVE
+  SUCCEEDED
+  FAILED
+  REVERSED
+}
+
+enum Impact {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Reversibility {
+  EASY
+  MODERATE
+  HARD
+  IRREVERSIBLE
+}
+
+enum Outcome {
+  SUCCEEDED
+  FAILED
+  REVERSED
+}
+
+model Assumption {
+  id                    String            @id @default(uuid())
+  decisionId            String
+  decision              Decision          @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  text                  String            @db.Text
+  confidenceAtCreation  AssumptionConfidence?
+  validatedAs           ValidationResult?
+  validatedOn           DateTime?
+  validationNotes       String?           @db.Text
+  createdAt             DateTime          @default(now())
+}
+
+enum AssumptionConfidence {
+  CONFIDENT
+  SOMEWHAT_CONFIDENT
+  UNCERTAIN
+}
+
+enum ValidationResult {
+  TRUE
+  FALSE
+  PARTIALLY_TRUE
+  UNKNOWN
+}
+
+model Review {
+  id                  String      @id @default(uuid())
+  decisionId          String      @unique
+  decision            Decision    @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  reviewedBy          String
+  outcome             Outcome
+  whatHappened        String?     @db.Text
+  whatWentWrong       String?     @db.Text
+  rootCause           RootCause?
+  couldWeHaveKnown    Foreseeability?
+  whatWeLearned       String?     @db.Text
+  costOfFailure       FailureCost?
+  actualImpact        ActualImpact?
+  wouldMakeAgain      Boolean?
+  createdAt           DateTime    @default(now())
+}
+
+enum RootCause {
+  BAD_DATA
+  WRONG_ASSUMPTIONS
+  CHANGED_CONTEXT
+  RUSHED_DECISION
+  IGNORED_WARNINGS
+  EXTERNAL_SHOCK
+  OTHER
+}
+
+enum Foreseeability {
+  YES_HAD_SIGNALS
+  MAYBE_UNCLEAR
+  NO_UNFORESEEABLE
+}
+
+enum FailureCost {
+  MINOR         // <$1k
+  MODERATE      // $1k-$10k
+  MAJOR         // $10k-$50k
+  SEVERE        // >$50k
+}
+
+enum ActualImpact {
+  LOWER_THAN_EXPECTED
+  AS_EXPECTED
+  HIGHER_THAN_EXPECTED
+}
+
+model DecisionVersion {
+  id            String      @id @default(uuid())
+  decisionId    String
+  decision      Decision    @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  versionNumber Int
+  changedBy     String
+  changes       Json        // Diff of what changed
+  changedAt     DateTime    @default(now())
+  
+  @@index([decisionId])
+}
+
+model Insight {
+  id              String        @id @default(uuid())
+  workspaceId     String
+  workspace       Workspace     @relation(fields: [workspaceId], references: [id])
+  insightType     InsightType
+  title           String
+  description     String        @db.Text
+  relatedDecisions String[]     // Decision IDs
+  generatedAt     DateTime      @default(now())
+  dismissed       Boolean       @default(false)
+  
+  @@index([workspaceId, generatedAt])
+}
+
+enum InsightType {
+  RECURRING_FAILURE
+  ASSUMPTION_BLINDSPOT
+  CATEGORY_TREND
+  TEAM_DYNAMICS
+  CONFIDENCE_CALIBRATION
+}
+
+AI Integration Architecture
+Embedding Generation:
+// When decision created/updated
+async function generateEmbedding(decision: Decision) {
+  const text = `${decision.title} ${decision.context} ${decision.theDecision}`;
+  
+  const response = await openai.embeddings.create({
+    model: "text-embedding-3-small",
+    input: text,
+  });
+  
+  const embedding = response.data[0].embedding;
+  
+  // Store embedding as JSON string in DB
+  await prisma.decision.update({
+    where: { id: decision.id },
+    data: { embedding: JSON.stringify(embedding) }
+  });
+}
+Similar Decision Search:
+// Using pgvector extension in Postgres
+async function findSimilarDecisions(decisionId: string, limit = 3) {
+  const decision = await prisma.decision.findUnique({
+    where: { id: decisionId },
+    select: { embedding: true }
+  });
+  
+  if (!decision?.embedding) return [];
+  
+  // Raw SQL query using pgvector cosine similarity
+  const similar = await prisma.$queryRaw`
+    SELECT id, title, status, "madeOn"
+    FROM "Decision"
+    WHERE embedding IS NOT NULL
+      AND id != ${decisionId}
+      AND "workspaceId" = (SELECT "workspaceId" FROM "Decision" WHERE id = ${decisionId})
+    ORDER BY embedding <=> ${decision.embedding}::vector
+    LIMIT ${limit}
+  `;
+  
+  return similar;
+}
+AI Tagging:
+async function generateTags(decision: Decision) {
+  const prompt = `Analyze this decision and generate 3-5 relevant tags (single words or 2-word phrases):
+
+Title: ${decision.title}
+Context: ${decision.context}
+Decision: ${decision.theDecision}
+
+Generate tags that capture: topic, domain, strategy type.
+Output as JSON array: ["tag1", "tag2", "tag3"]`;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [{ role: "user", content: prompt }],
+    temperature: 0.3,
+  });
+  
+  const tags = JSON.parse(response.choices[0].message.content || "[]");
+  return tags.slice(0, 5); // Max 5 tags
+}
+Insight Generation (Phase 4):
+// Background job runs weekly
+async function generateInsights(workspaceId: string) {
+  const decisions = await prisma.decision.findMany({
+    where: { workspaceId },
+    include: { assumptions: true, review: true }
+  });
+  
+  if (decisions.length < 20) return; // Need min 20 decisions
+  
+  // Calculate stats
+  const stats = {
+    total: decisions.length,
+    succeeded: decisions.filter(d => d.status === 'SUCCEEDED').length,
+    failed: decisions.filter(d => d.status === 'FAILED').length,
+    reversed: decisions.filter(d => d.status === 'REVERSED').length,
+    byCategory: groupBy(decisions, 'category'),
+    assumptionAccuracy: calculateAssumptionAccuracy(decisions),
+  };
+  
+  // Use GPT to generate insights
+  const prompt = `Analyze these decision patterns and generate 3-5 actionable insights:
+
+Statistics:
+${JSON.stringify(stats, null, 2)}
+
+Sample failed decisions:
+${decisions.filter(d => d.status === 'FAILED').slice(0, 5).map(d => ({
+  title: d.title,
+  category: d.category,
+  review: d.review?.whatWentWrong
+}))}
+
+Generate insights in format:
+{
+  "insights": [
+    {
+      "type": "RECURRING_FAILURE" | "ASSUMPTION_BLINDSPOT" | "CATEGORY_TREND",
+      "title": "Short title",
+      "description": "Detailed insight with evidence and suggestion"
+    }
+  ]
+}`;
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [{ role: "user", content: prompt }],
+    response_format: { type: "json_object" },
+  });
+  
+  const { insights } = JSON.parse(response.choices[0].message.content);
+  
+  // Store insights in DB
+  for (const insight of insights) {
+    await prisma.insight.create({
+      data: {
+        workspaceId,
+        insightType: insight.type,
+        title: insight.title,
+        description: insight.description,
+        relatedDecisions: [], // Could be enhanced to link specific decisions
+      }
+    });
+  }
+}
+
+Scalability Plan
+MVP Scale Target: 500 users, 10k decisions, 1k API requests/hour
+Bottlenecks & Solutions:
+Phase-by-Phase Scaling:
+Phase 1-2 (0-100 users):
+- Vercel Hobby plan
+- Supabase Free tier
+- OpenAI $50/month budget
+- No caching needed
+
+Phase 3-4 (100-500 users):
+- Vercel Pro plan ($20/month)
+- Supabase Pro ($25/month)
+- OpenAI $200/month budget
+- Add Redis caching (Upstash, $10/month)
+
+Phase 5+ (500-2000 users):
+- Vercel Team plan or migrate to Railway/Fly.io
+- Supabase Team ($599/month) or self-hosted Postgres
+- OpenAI $500/month budget or switch to cheaper embedding model
+- Dedicated Redis instance
+- Consider CDN for static assets
+
+Security & Data Privacy
+Authentication:
+Clerk handles auth (OAuth, email/password)
+JWTs for API authentication
+Session management via Clerk
+Authorization:
+Row-level security via Prisma middleware
+Users can only access decisions in their workspace
+Role-based access control (Admin, Member, Viewer)
+Data Encryption:
+At-rest: Postgres encryption (Supabase default)
+In-transit: HTTPS/TLS everywhere (Vercel default)
+Sensitive fields (budget_impact) encrypted at app level (Phase 5+)
+API Rate Limiting:
+// Using Upstash Redis
+import { Ratelimit } from "@upstash/ratelimit";
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(100, "1 h"), // 100 requests per hour
+});
+
+export async function rateLimit(userId: string) {
+  const { success } = await ratelimit.limit(userId);
+  if (!success) throw new Error("Rate limit exceeded");
+}
+GDPR Compliance:
+User can delete account → cascades delete all data
+Data export available (Phase 3)
+Privacy policy and terms of service (launch requirement)
+Cookie consent banner (if using analytics)
+AI Data Handling:
+OpenAI API: Only send decision text (no PII like emails, user names)
+Anonymize data before sending to AI
+No training on user data (OpenAI default for API usage)
+
+👥 USER ONBOARDING FLOW (DETAILED)
+Signup to First Decision (Under 5 Minutes)
+Step 1: Landing Page → Signup
+Landing Page:
+- Headline: "GitHub for Decisions"
+- Subheadline: "Stop repeating expensive mistakes"
+- CTA: "Start Logging Decisions Free"
+
+User clicks CTA → Signup page
+
+Signup Form:
+- Email
+- Password
+- Or: "Continue with Google" (OAuth)
+
+After submission:
+- Create user account (Clerk)
+- Create workspace (auto-named "[Name]'s Workspace")
+- Redirect to onboarding
+
+Step 2: Welcome Modal
+Full-screen modal (cannot skip):
+
+"Welcome to Decision Memory! 👋
+
+Let's get you started in 3 quick steps."
+
+[Next]
+
+Step 3: Onboarding Tour
+Screen 1: "What is a decision?"
+
+"A decision is any choice that:
+- Affects your business
+- You might regret later
+- You want to learn from
+
+Examples:
+✓ Switching from Heroku to Railway
+✓ Hiring a senior engineer
+✓ Changing pricing from $49 to $99"
+
+[Next]
+
+---
+
+Screen 2: "How Decision Memory works"
+
+"1. Log decisions as you make them
+2. Update outcomes later
+3. AI finds patterns to help you improve
+
+[Show interactive demo]"
+
+[Next]
+
+---
+
+Screen 3: "Your first decision"
+
+"Let's log your first decision together.
+
+Choose:
+○ Use a demo decision (we'll pre-fill everything)
+○ Log a real decision from the past week
+○ I'll explore on my own"
+
+[Continue]
+
+Step 4A: If User Selects "Demo Decision"
+Pre-filled decision shown:
+
+Title: "Switch from Heroku to Railway"
+Category: Tech
+Status: Active
+
+Context: "Heroku's pricing increased 40%. Our monthly bill hit $400. We need a cheaper alternative that still offers good DX."
+
+The Decision: "We're migrating all services to Railway. Migration to be completed in 2 weeks."
+
+Alternatives Considered:
+1. Stay on Heroku → Too expensive at scale
+2. Self-host on AWS → Too much ops overhead for 2-person team
+3. Railway → Best balance of cost ($50/month) and DX
+
+Key Assumptions:
+1. Migration will take <2 weeks
+2. Railway has comparable uptime to Heroku
+3. No hidden costs or gotchas
+
+Success Criteria:
+1. All services running on Railway
+2. Monthly bill <$100
+3. Zero downtime during migration
+
+[Annotations shown]:
+"👆 This is the context - WHY you're making this decision"
+"👆 These are alternatives you considered but rejected"
+"👆 These assumptions will be validated later"
+
+[This is a demo - Create Your Own]
+User clicks "Create Your Own" → Goes to blank decision form
+
+Step 4B: If User Selects "Log a Real Decision"
+Simplified form (only required fields):
+
+"Tell us about a decision you made recently"
+
+Decision Title:
+[___________________________________________]
+Placeholder: "e.g., Hired a freelance designer"
+
+What did you decide?
+[___________________________________________]
+Placeholder: "In 1-2 sentences, what did you choose?"
+
+Category:
+[Dropdown: Product, Marketing, Sales, Hiring, Tech, Operations, Strategic, Other]
+
+[Save Decision] [Cancel]
+
+After saving:
+"🎉 You logged your first decision!
+
+Want to add more details?
+- Why you made this decision
+- What alternatives you considered
+- What assumptions you're making
+
+[Add Details] [I'll do this later]"
+
+Step 5: Dashboard First Load
+Checklist shown (dismissible):
+
+"🎯 Get Started Checklist
+
+☑ Log your first decision (Done!)
+☐ Add assumptions and alternatives
+☐ Log 2 more decisions this week
+☐ Update outcome on 1 decision
+
+Progress: 1/4
+
+[Dismiss]"
+
+Dashboard shows:
+- 1 decision card (just created)
+- Empty state message: "Log 2 more decisions this week to unlock AI insights"
+- Prominent "New Decision" button
+
+Step 6: First Week Reminders
+Day 2 Email:
+Subject: "Quick question about your first decision"
+Content:
+"Hey! You logged your first decision yesterday 🎉
+
+Quick question: Did you add alternatives and assumptions?
+
+Adding these helps you learn patterns later.
+
+[Add Details to Your Decision]"
+
+---
+
+Day 4 Email (if <3 decisions logged):
+Subject: "Log a decision you regret"
+Content:
+"The best way to see value from Decision Memory is to log a past decision you regret.
+
+Example: 'We switched from Stripe to Paddle and regretted it.'
+
+Logging regrets helps you avoid repeating them.
+
+[Log a Regret]"
+
+---
+
+Day 7 Email:
+Subject: "Your first week summary"
+Content:
+"You've logged X decisions this week.
+
+Here's what to do next:
+1. Go back and update outcomes
+2. Add assumptions to existing decisions
+3. Keep logging new decisions as you make them
+
+The more you log, the better AI insights get.
+
+[View Dashboard]"
+
+📊 FEATURE PRIORITIZATION MATRIX
+How We Decide What to Build Next
+Priority Framework
+Impact vs Effort Matrix:
+
+High Impact, Low Effort (BUILD FIRST):
+- Decision templates (Week 2)
+- Email notifications (Week 3)
+- Duplicate decision (Week 3)
+- Quick status edit (Week 4)
+- Export PDF (Month 3)
+
+High Impact, High Effort (BUILD AFTER MVP VALIDATED):
+- AI insights dashboard (Month 4)
+- Team collaboration (Month 7)
+- Slack integration (Month 8)
+- Mobile app (Month 11)
+
+Low Impact, Low Effort (NICE TO HAVE):
+- Keyboard shortcuts (Week 4)
+- Dark mode
+- Decision journal view (Month 6)
+
+Low Impact, High Effort (DO NOT BUILD):
+- Custom workflows
+- Advanced reporting
+- Decision forecasting
+
+User Request Prioritization
+When users request features, evaluate:
+
+Does it help habit formation?
+
+If yes → High priority
+Example: Reminders, streaks, nudges
+
+Does it increase decision quality?
+
+If yes → Medium priority
+Example: Templates, assumption checker
+
+Does it unlock revenue?
+
+If yes → High priority
+Example: Team features, integrations
+
+Does it reduce churn?
+
+If yes → High priority
+Example: Export, insights
+
+Is it a "nice to have"?
+
+If yes → Low priority
+Example: UI polish, cosmetic features
+
+📈 SUCCESS METRICS PER PHASE
+How We Measure Progress
+Phase 1 (MVP - Week 1)
+Acquisition:
+Target: 100 signups
+Measure: Signups per day, source breakdown
+Activation:
+Target: 40% log 3+ decisions in first 7 days
+Measure: % of signups who reach 3 decisions
+Engagement:
+Target: 30% return on Day 3
+Measure: D3 retention rate
+Quality:
+Target: 50% of decisions have all required fields
+Measure: Avg fields filled per decision
+
+Phase 2 (Weeks 2-4)
+Activation Improvement:
+Target: 50% log 3+ decisions (up from 40%)
+Measure: Impact of templates and onboarding changes
+Retention:
+Target: 25% of Week 1 users still active in Week 4
+Measure: Weekly active users (WAU)
+Feature Adoption:
+Target: 30% use decision templates
+Measure: % of decisions created from template
+
+Phase 3 (Months 2-3)
+Habit Formation:
+Target: 20% of users log decisions 2+ weeks in a row
+Measure: Streak retention
+Outcome Updates:
+Target: 30% of decisions have outcomes updated
+Measure: % of decisions with review data
+Upgrade Signals:
+Target: 10% hit 20-decision limit
+Measure: % of users approaching free tier limit
+
+Phase 4 (Months 4-6)
+Monetization:
+Target: 5% of free users upgrade to Pro
+Measure: Free → Pro conversion rate
+Retention:
+Target: 35% of Month 1 users still active in Month 4
+Measure: 4-month retention
+AI Value:
+Target: 70% of users with 20+ decisions view insights weekly
+Measure: Insights page engagement
+
+Phase 5 (Months 7-12)
+Team Adoption:
+Target: 20% of Pro users upgrade to Team
+Measure: Pro → Team conversion rate
+Revenue:
+Target: $5k MRR by Month 12
+Measure: Monthly recurring revenue
+Expansion:
+Target: Avg 3 users per Team workspace
+Measure: Team size distribution
+
+🚨 LAUNCH READINESS CHECKLIST
+Before Going Public
+Technical
+[ ] All MVP features functional (no critical bugs)
+[ ] Mobile-responsive UI (tested on iPhone, Android)
+[ ] Page load times <2 seconds
+[ ] API rate limiting implemented
+[ ] Database backups configured (daily)
+[ ] Error tracking setup (Sentry or similar)
+[ ] Analytics setup (Posthog or Mixpanel)
+[ ] Email sending tested (welcome email, outcome reminders)
+[ ] Payment flow tested (Stripe test mode → production)
+[ ] SSL certificate valid
+[ ] Environment variables secured
+
+Legal & Compliance
+[ ] Privacy policy published
+[ ] Terms of service published
+[ ] Cookie consent banner (if tracking cookies)
+[ ] GDPR-compliant data handling
+[ ] Refund policy defined
+[ ] Support email setup (support@decisionmemory.com)
+
+Content & Marketing
+[ ] Landing page live
+[ ] Product screenshots/demo video ready
+[ ] Pricing page clear
+[ ] FAQ page written
+[ ] Launch tweet drafted
+[ ] Indie Hackers post drafted
+[ ] Product Hunt listing ready (if launching there)
+[ ] 10 beta user testimonials collected
+
+Operations
+[ ] Customer support workflow defined
+[ ] Bug reporting process clear
+[ ] Feature request tracking system
+[ ] Monitoring alerts configured (Vercel, Supabase)
+[ ] Weekly backup of database tested
+[ ] Incident response plan documented
+
+🎯 POST-LAUNCH STRATEGY (First 30 Days)
+Week 1: Launch & Monitor
+Goals:
+Get first 100 signups
+Ensure zero critical bugs
+Respond to every user within 24 hours
+Daily Tasks:
+Check dashboard: signups, activation rate, errors
+Respond to support emails
+Monitor Twitter mentions
+Fix critical bugs immediately
+
+Week 2: Iterate Based on Feedback
+Goals:
+Improve activation rate (40% → 50%)
+Ship 2-3 quick wins based on user feedback
+Tasks:
+Interview 10 active users (20-min calls)
+Analyze where users drop off in onboarding
+Ship onboarding improvements (Phase 2 updates)
+Send Week 1 summary email to all users
+
+Week 3: Content & Growth
+Goals:
+Drive organic signups through content
+Build initial SEO foundation
+Tasks:
+Publish decision autopsy blog post
+Share on Indie Hackers, Reddit
+Start SEO keyword research
+Set up Google Search Console
+
+Week 4: Monetization Prep
+Goals:
+Get first paying customer
+Validate pricing
+Tasks:
+Email users approaching free tier limit (20/25 decisions)
+Offer early adopter discount: "Upgrade now, get 20% off forever"
+Interview 5 users who hit limit but didn't upgrade (why not?)
+Adjust pricing/features based on feedback
+
+🔮 LONG-TERM VISION (Beyond MVP)
+Where This Product Goes in 2-3 Years
+Vision Statement
+"Become the system of record for strategic decisions in every startup and small business. The place where founders and teams capture, review, and learn from every important choice they make."
+
+Future Features (Post-Year 1)
+AI Decision Coach:
+Real-time suggestions while creating decision
+"Based on 47 past decisions, here's what tends to work for you..."
+Proactive risk alerts: "You made a similar decision 6 months ago and reversed it"
+Decision Frameworks Library:
+Pre-built frameworks: RICE, ICE, Pros/Cons, First Principles
+Community-contributed frameworks
+"Apply framework to this decision" one-click
+Network Effects:
+Anonymized benchmarking: "Your product decisions succeed 70% of the time. Industry avg: 60%"
+Decision marketplace: "Buy access to anonymized decisions from successful founders"
+Decision Autopilot (Controversial):
+AI suggests decisions based on your patterns
+"Based on your past behavior, you'll likely choose option B. Here's why..."
+Enterprise:
+Department-level workspaces
+C-suite decision dashboards
+Board reporting: "Key decisions this quarter + outcomes"
+
+Exit Opportunities
+Acquirers:
+Notion (add as decision database feature)
+Linear (add to project management suite)
+Atlassian (Confluence alternative)
+Monday.com (expand beyond tasks)
+Valuation Path:
+$1M ARR → $10M valuation (10x revenue multiple)
+$5M ARR → $30-50M valuation
+$10M ARR → $80-100M valuation (if high growth + retention)
+
+✅ FINAL CHECKLIST FOR FOUNDER
+Before you start building:
+[ ] Have you personally felt decision regret in the last 6 months?
+[ ] Have you interviewed 15+ founders to validate the pain?
+[ ] Do you have 10+ founders who said they'd use this?
+[ ] Do you have 3-6 months of runway to build and launch?
+[ ] Are you prepared to use this product daily yourself?
+[ ] Do you have technical skills or a technical co-founder?
+[ ] Are you ready to iterate based on user feedback (not your vision)?
+[ ] Have you accepted this might fail, and you're okay with that?
+If you checked all boxes → Build the MVP.
+If not → Do more validation first.
+
+🚀 READY TO LAUNCH?
+Next Steps
+Week 1: Set up tech stack (Next.js, Supabase, Clerk, Vercel)
+Week 2-3: Build MVP core (auth, decision CRUD, dashboard)
+Week 4: Add AI features (tagging, similarity)
+Week 5: Internal testing + bug fixes
+Week 6: Private beta (10 founders)
+Week 7: Iterate based on beta feedback
+Week 8: Build landing page, set up payments
+Week 9: PUBLIC LAUNCH 🎉
+
+This plan is complete, realistic, and executable.
+Now go build it.
+

@@ -1,0 +1,280 @@
+// Prisma Schema for Decision Memory - SQLite for Development
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id             String      @id @default(uuid())
+  clerkId        String      @unique
+  email          String      @unique
+  name           String?
+  profilePicture String?
+  timezone       String      @default("UTC")
+  workspaceId    String
+  workspace      Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  role           String      @default("MEMBER") // ADMIN, MEMBER, VIEWER
+  hasOnboarded   Boolean     @default(false)
+  decisions      Decision[]  @relation("DecisionCreator")
+  reviews        Review[]
+  comments       Comment[]
+  notifications  Notification[]
+  activities     UserActivity[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+// ... (existing code continues)
+
+// ============================================
+// NOTIFICATION
+// ============================================
+
+model Notification {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   // INFO, SUCCESS, WARNING, ERROR, BILLING
+  title       String
+  message     String
+  link        String?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([userId, isRead])
+}
+
+
+// ============================================
+// WORKSPACE
+// ============================================
+
+model Workspace {
+  id        String     @id @default(uuid())
+  name      String
+  createdBy String
+  planTier           String    @default("FREE") // FREE, PRO, TEAM, ENTERPRISE
+  stripeCustomerId   String?   @unique
+  stripeSubscriptionId String? @unique
+  stripePriceId      String?
+  stripeCurrentPeriodEnd DateTime?
+  users              User[]
+  decisions          Decision[]
+  insights           Insight[]
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+// ============================================
+// DECISION
+// ============================================
+
+model Decision {
+  id                     String            @id @default(uuid())
+  workspaceId            String
+  workspace              Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  title                  String
+  category               String            // PRODUCT, MARKETING, SALES, HIRING, TECH, OPERATIONS, STRATEGIC, OTHER
+  madeById               String
+  madeBy                 User              @relation("DecisionCreator", fields: [madeById], references: [id])
+  madeOn                 DateTime          @default(now())
+  status                 String            @default("ACTIVE") // DRAFT, PROPOSED, ACTIVE, SUCCEEDED, FAILED, REVERSED
+
+  // Core content
+  theDecision            String
+  context                String
+  alternativesConsidered String            // JSON: [{name: string, whyRejected: string}]
+  successCriteria        String            // JSON: string[]
+  tags                   String            // JSON: string[]
+
+  // Optional metadata
+  estimatedImpact        String?           // LOW, MEDIUM, HIGH, CRITICAL
+  reversibility          String?           // EASY, MODERATE, HARD, IRREVERSIBLE
+  confidenceLevel        Int?              // 0-100
+  timelineToValidate     DateTime?
+  budgetImpact           Float?
+  stakeholders           String?           // JSON: string[] (User IDs)
+  relatedDecisions       String?           // JSON: string[] (Decision IDs)
+  privacy                String            @default("WORKSPACE") // WORKSPACE, PUBLIC, ANONYMOUS_PUBLIC
+
+  // AI data
+  aiRiskScore            Int?
+  embedding              String?
+
+  // Relations
+  assumptions            Assumption[]
+  review                 Review?
+  comments               Comment[]
+  versions               DecisionVersion[]
+
+  // Timestamps
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, category])
+  @@index([workspaceId, madeOn])
+}
+
+// ============================================
+// ASSUMPTION
+// ============================================
+
+model Assumption {
+  id                   String    @id @default(uuid())
+  decisionId           String
+  decision             Decision  @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  text                 String
+  confidenceAtCreation String?   // CONFIDENT, SOMEWHAT_CONFIDENT, UNCERTAIN
+  validatedAs          String?   // TRUE, FALSE, PARTIALLY_TRUE, UNKNOWN
+  validatedOn          DateTime?
+  validationNotes      String?
+  createdAt            DateTime  @default(now())
+
+  @@index([decisionId])
+}
+
+// ============================================
+// REVIEW (Outcome)
+// ============================================
+
+model Review {
+  id               String   @id @default(uuid())
+  decisionId       String   @unique
+  decision         Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  reviewedById     String
+  reviewedBy       User     @relation(fields: [reviewedById], references: [id], onDelete: Cascade)
+  outcome          String   // SUCCEEDED, FAILED, REVERSED
+  whatHappened     String?
+  whatWentWrong    String?
+  rootCause        String?  // BAD_DATA, WRONG_ASSUMPTIONS, CHANGED_CONTEXT, RUSHED_DECISION, IGNORED_WARNINGS, EXTERNAL_SHOCK, OTHER
+  couldWeHaveKnown String?  // YES_HAD_SIGNALS, MAYBE_UNCLEAR, NO_UNFORESEEABLE
+  whatWeLearned    String?
+  costOfFailure    String?  // MINOR, MODERATE, MAJOR, SEVERE
+  actualImpact     String?  // LOWER_THAN_EXPECTED, AS_EXPECTED, HIGHER_THAN_EXPECTED
+  wouldMakeAgain   Boolean?
+  createdAt        DateTime @default(now())
+}
+
+// ============================================
+// VERSION HISTORY
+// ============================================
+
+model DecisionVersion {
+  id            String   @id @default(uuid())
+  decisionId    String
+  decision      Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  versionNumber Int
+  changedBy     String
+  changes       String   // JSON: Diff of what changed
+  changedAt     DateTime @default(now())
+
+  @@index([decisionId])
+}
+
+// ============================================
+// INSIGHTS (Phase 4)
+// ============================================
+
+model Insight {
+  id               String    @id @default(uuid())
+  workspaceId      String
+  workspace        Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  insightType      String    // RECURRING_FAILURE, ASSUMPTION_BLINDSPOT, CATEGORY_TREND, TEAM_DYNAMICS, CONFIDENCE_CALIBRATION
+  title            String
+  description      String
+  relatedDecisions String    // JSON: string[] (Decision IDs)
+  generatedAt      DateTime  @default(now())
+  dismissed        Boolean   @default(false)
+
+  @@index([workspaceId, generatedAt])
+}
+
+// ============================================
+// COMMENT
+// ============================================
+
+model Comment {
+  id          String   @id @default(uuid())
+  decisionId  String
+  decision    Decision @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content     String
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  @@index([decisionId])
+}
+// ============================================
+// ADMIN & ANALYTICS
+// ============================================
+
+model PriceConfig {
+  id          String   @id @default(uuid())
+  planTier    String   // FREE, PRO, TEAM, ENTERPRISE
+  countryCode String?  // Optional for general price
+  amount      Float
+  currency    String   @default("USD")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([planTier, countryCode])
+}
+
+model UserActivity {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // SESSION_START, SESSION_END, PAGE_VIEW
+  duration  Int?     // Duration in seconds for SESSION types
+  metadata  String?  // JSON
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model PageVersion {
+  id          String   @id @default(uuid())
+  pageName    String   // e.g., "landing"
+  content     String   // JSON content
+  status      String   @default("DRAFT") // DRAFT, SCHEDULED, APPROVED, LIVE
+  scheduledFor DateTime?
+  approvedAt  DateTime?
+  approvedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, scheduledFor])
+}
+
+model SystemBroadcast {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  type      String   @default("INFO") // INFO, SUCCESS, WARNING, ERROR, BILLING
+  sentBy    String?
+  createdAt DateTime @default(now())
+}
+
+// ============================================
+// FEATURE FLAGS
+// ============================================
+
+model FeatureFlag {
+  id          String   @id @default(uuid())
+  featureKey  String   @unique
+  isEnabled   Boolean  @default(false)
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

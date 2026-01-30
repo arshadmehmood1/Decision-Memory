@@ -1,0 +1,387 @@
+﻿
+> decision-memory-backend@1.0.0 test
+> vitest run src/routes/admin.test.ts --reporter verbose
+
+node.exe : [33mThe 
+CJS build of Vite's 
+Node API is 
+deprecated. See https:
+//vite.dev/guide/troub
+leshooting.html#vite-c
+js-node-api-deprecated
+ for more 
+details.[39m
+At line:1 char:1
++ & "C:\/node.exe" "C:
+\/node_modules/npm/bin
+/npm-cli.js" test -- 
+src/ro ...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([33mThe C   
+ JS bu...e details    
+.[39m:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mD:/Decision-Memory/backend[39m
+
+[90mstdout[2m | src/routes/admin.test.ts
+[22m[39m[dotenv@17.2.3] injecting env (7) from .env -- tip: ΓÜÖ∩╕Å  enable debug logging with { debug: true }
+
+[90mstdout[2m | src/routes/admin.test.ts
+[22m[39mStarting tests...
+
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mRBAC (Role Based Access Control)[2m > [22mshould block non-admin users from admin routes
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mRBAC (Role Based Access Control)[2m > [22mshould allow admin users to access admin routes
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mGET /api/admin/stats[2m > [22mshould return system-wide statistics
+[90mstderr[2m | src/
+routes/admin.test.ts[
+2m > [22m[2mAdmin 
+API Integration[2m > 
+[22m[2mPOST /api/adm
+in/pricing[2m > 
+[22m[2mshould 
+update pricing 
+configuration
+[22m[39mError: {
+  message: [32m'__vit
+e_ssr_import_2__.prism
+a.priceConfig.upsert 
+is not a 
+function'[39m,
+  stack: 
+[32m'TypeError: __vit
+e_ssr_import_2__.prism
+a.priceConfig.upsert 
+is not a 
+function\n'[39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\src\\routes\\admin.
+ts:179:49\n'[39m +
+    [32m'    at 
+Layer.handle [as 
+handle_request] (D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\layer
+.js:95:5)\n'[39m +
+    [32m'    at next 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\route.js:149:13)\n'[
+39m +
+    [32m'    at 
+Route.dispatch (D:\\De
+cision-Memory\\backend
+\\node_modules\\expres
+s\\lib\\router\\route.
+js:119:3)\n'[39m +
+    [32m'    at 
+Layer.handle [as 
+handle_request] (D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\layer
+.js:95:5)\n'[39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\index
+.js:284:15\n'[39m +
+    [32m'    at 
+router.process_params 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\index.js:346:12)\n'[
+39m +
+    [32m'    at next 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\index.js:280:10)\n'[
+39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\src\\routes\\admin.
+test.ts:14:5\n'[39m +
+    [32m'    at 
+Layer.handle [as 
+handle_request] (D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\layer
+.js:95:5)'[39m,
+  code: 
+[90mundefined[39m,
+  statusCode: 
+[90mundefined[39m
+}
+
+[90mstderr[2m | src/
+routes/admin.test.ts[
+2m > [22m[2mAdmin 
+API Integration[2m > 
+[22m[2mPOST /api/adm
+in/pricing[2m > 
+[22m[2mshould 
+validate pricing 
+payload
+[22m[39mError: {
+  message: 
+[32m"Invalid enum 
+value. Expected 
+'FREE' | 'PRO' | 
+'TEAM' | 
+'ENTERPRISE', 
+received 'INVALID', 
+Required"[39m,
+  stack: [32m"Error: 
+Invalid enum value. 
+Expected 'FREE' | 
+'PRO' | 'TEAM' | 
+'ENTERPRISE', 
+received 'INVALID', 
+Required\n"[39m +
+    [32m'    at 
+createError (D:\\Decis
+ion-Memory\\backend\\s
+rc\\middleware\\errorH
+andler.ts:49:29)\n'[3
+9m +
+    [32m'    at 
+Module.badRequest (D:\
+\Decision-Memory\\back
+end\\src\\middleware\\
+errorHandler.ts:60:12)
+\n'[39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\src\\routes\\admin.
+ts:177:36\n'[39m +
+    [32m'    at 
+Layer.handle [as 
+handle_request] (D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\layer
+.js:95:5)\n'[39m +
+    [32m'    at next 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\route.js:149:13)\n'[
+39m +
+    [32m'    at 
+Route.dispatch (D:\\De
+cision-Memory\\backend
+\\node_modules\\expres
+s\\lib\\router\\route.
+js:119:3)\n'[39m +
+    [32m'    at 
+Layer.handle [as 
+handle_request] (D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\layer
+.js:95:5)\n'[39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\node_modules\\expre
+ss\\lib\\router\\index
+.js:284:15\n'[39m +
+    [32m'    at 
+router.process_params 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\index.js:346:12)\n'[
+39m +
+    [32m'    at next 
+(D:\\Decision-Memory\\
+backend\\node_modules\
+\express\\lib\\router\
+\index.js:280:10)'[39
+m,
+  code: [32m'BAD_REQU
+EST'[39m,
+  statusCode: 
+[33m400[39m
+}
+
+[90mstderr[2m | src/
+routes/admin.test.ts[
+2m > [22m[2mAdmin 
+API Integration[2m > 
+[22m[2mPOST /api/adm
+in/broadcast[2m > 
+[22m[2mshould track 
+global broadcasts
+[22m[39mError: {
+  message: 
+[32m"Cannot read 
+properties of 
+undefined (reading 
+'map')"[39m,
+  stack: 
+[32m"TypeError: 
+Cannot read 
+properties of 
+undefined (reading 
+'map')\n"[39m +
+    [32m'    at D:\\D
+ecision-Memory\\backen
+d\\src\\routes\\admin.
+ts:255:25\n'[39m +
+    [32m'    at proce
+ssTicksAndRejections (
+node:internal/process/
+task_queues:103:5)'[3
+9m,
+  code: 
+[90mundefined[39m,
+  statusCode: 
+[90mundefined[39m
+}
+
+ [31m├ù[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mPOST /api/admin/pricing[2m > [22mshould update pricing configuration
+[31m   ΓåÆ expected 500 to be 200 // Object.is equality[39m
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mPOST /api/admin/pricing[2m > [22mshould validate pricing payload
+ [31m├ù[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mPOST /api/admin/broadcast[2m > [22mshould track global broadcasts
+[31m   ΓåÆ expected 500 to be 201 // Object.is equality[39m
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mCMS Matrix Workflow[2m > [22mshould create a new page version draft
+ [32mΓ£ô[39m src/routes/admin.test.ts[2m > [22mAdmin API Integration[2m > [22mCMS Matrix Workflow[2m > [22mshould approve a draft and make it live
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»[1m[7m Failed 
+Tests 2 [27m[22mΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+
+[31m[1m[7m FAIL 
+[27m[22m[39m src/ro
+utes/admin.test.ts[2m
+ > [22mAdmin API 
+Integration[2m > 
+[22mPOST /api/admin/p
+ricing[2m > 
+[22mshould update 
+pricing configuration
+[31m[1mAssertionErro
+r[22m: expected 500 
+to be 200 // 
+Object.is 
+equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 500[39m
+
+[36m [2mΓ¥»[22m src
+/routes/admin.test.ts:
+[2m95:32[22m[39m
+    [90m 93| [39m   
+             [33m.[3
+9m[34msend[39m(paylo
+ad)[33m;[39m
+    [90m 94| [39m
+    [90m 95| [39m   
+         [34mexpect[
+39m(res[33m.[39mstat
+us)[33m.[39m[34mtoB
+e[39m([34m200[39m)
+[33m;[39m
+    [90m   | [39m   
+                      
+      [31m^[39m
+    [90m 96| [39m   
+         [34mexpect[
+39m(res[33m.[39mbody
+[33m.[39msuccess)[3
+3m.[39m[34mtoBe[39m
+([35mtrue[39m)[33m;
+[39m
+    [90m 97| [39m   
+         [34mexpect[
+39m(res[33m.[39mbody
+[33m.[39mmessage)[3
+3m.[39m[34mtoContain
+[39m([32m'Pricing 
+matrix update [39mΓÇª
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/2]ΓÄ
+»[22m[39m
+
+[31m[1m[7m FAIL 
+[27m[22m[39m src/ro
+utes/admin.test.ts[2m
+ > [22mAdmin API 
+Integration[2m > 
+[22mPOST /api/admin/b
+roadcast[2m > 
+[22mshould track 
+global broadcasts
+[31m[1mAssertionErro
+r[22m: expected 500 
+to be 201 // 
+Object.is 
+equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 201[39m
+[31m+ 500[39m
+
+[36m [2mΓ¥»[22m src
+/routes/admin.test.ts:
+[2m123:32[22m[39m
+    [90m121| [39m   
+             [33m.[3
+9m[34msend[39m(paylo
+ad)[33m;[39m
+    [90m122| [39m
+    [90m123| [39m   
+         [34mexpect[
+39m(res[33m.[39mstat
+us)[33m.[39m[34mtoB
+e[39m([34m201[39m)
+[33m;[39m
+    [90m   | [39m   
+                      
+      [31m^[39m
+    [90m124| [39m   
+         [34mexpect[
+39m(res[33m.[39mbody
+[33m.[39msuccess)[3
+3m.[39m[34mtoBe[39m
+([35mtrue[39m)[33m;
+[39m
+    [90m125| [39m   
+     })[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/2]ΓÄ
+»[22m[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 20:25:26
+[2m   Duration [22m 1.29s[2m (transform 209ms, setup 37ms, collect 651ms, tests 98ms, environment 0ms, prepare 129ms)[22m
+
