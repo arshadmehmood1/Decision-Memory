@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 export default function GlobalError({
     error,
     reset,
@@ -9,10 +7,6 @@ export default function GlobalError({
     error: Error & { digest?: string };
     reset: () => void;
 }) {
-    useEffect(() => {
-        console.error(error);
-    }, [error]);
-
     return (
         <html>
             <body className="bg-black text-white flex items-center justify-center min-h-screen p-6">
@@ -27,14 +21,14 @@ export default function GlobalError({
 
                     <div className="space-y-2">
                         <h2 className="text-2xl font-black uppercase tracking-tighter">System Critical Failure</h2>
-                        <p className="text-gray-500 text-sm font-medium">Unknown error in the neural network.</p>
+                        <p className="text-gray-500 text-sm font-medium">An unexpected error occurred.</p>
                     </div>
 
                     <div className="p-4 bg-red-950/30 border border-red-900/50 rounded-lg text-left">
                         <p className="font-mono text-xs text-red-200 break-all">
-                            {error.message || 'An unexpected error occurred'}
+                            {error?.message || 'An unexpected error occurred'}
                         </p>
-                        {error.digest && (
+                        {error?.digest && (
                             <p className="font-mono text-[10px] text-red-400 mt-2">
                                 Digest: {error.digest}
                             </p>
