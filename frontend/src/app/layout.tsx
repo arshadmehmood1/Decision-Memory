@@ -21,14 +21,20 @@ export const metadata: Metadata = {
   description: "Strategic decision tracking for high-velocity teams",
 };
 
+export const viewport = {
+  themeColor: 'black',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
+    <html lang="en">
+      <ClerkProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -38,7 +44,7 @@ export default function RootLayout({
             <Toaster position="top-right" richColors closeButton />
           </QueryProvider>
         </body>
-      </html>
-    </ClerkProvider>
+      </ClerkProvider>
+    </html>
   );
 }
