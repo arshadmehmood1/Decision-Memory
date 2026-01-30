@@ -25,7 +25,10 @@ export function AuthSync() {
                 setIsAuthReady(true);
             } else if (authLoaded && !isSignedIn) {
                 setAuthToken(null);
-                logout();
+                // Only logout (which triggers redirect) if we think we are logged in
+                if (useStore.getState().currentUser) {
+                    logout();
+                }
                 setIsAuthReady(true);
             }
         };
